@@ -11,11 +11,20 @@ const lengthOfLIS = (nums) => {
 }
 
 const updateHistoryLIS = (historyLIS, numToPlace) => {
-  let updatePos = 0;
+  let [updatePos, low, high] = [0, 0, historyLIS.length - 1];
 
-  for (const num of historyLIS) {
-    if (num < numToPlace) updatePos++;
+  while (low <= high) {
+    const comparePos = low + Math.floor((high - low) / 2);
+    if (historyLIS[comparePos] > numToPlace) {
+      high = comparePos - 1;
+    } else if (historyLIS[comparePos] < numToPlace) {
+      low = comparePos + 1;
+    } else {
+      updatePos = comparePos;
+      break;
+    }
   }
+  updatePos = updatePos || low;
 
   if (updatePos < historyLIS.length) {
     historyLIS[updatePos] = numToPlace;

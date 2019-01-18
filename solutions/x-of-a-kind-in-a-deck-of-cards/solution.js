@@ -1,3 +1,9 @@
+/**
+*- 1, Use map to find the count of each element in the deck.
+*- 2, Transform the count of each element to an array.
+*- 3, Find the smallest in the array, and get all the factors of it (including itself, but except for '1')
+*- 4, Test whether one of the factors could be the common factor for all the number in the array. If No, *return false, else return true.
+*/
 const hasMinFactor = (arr) => {
   const minValue = Math.min(...arr);
   if (minValue < 2) return false;

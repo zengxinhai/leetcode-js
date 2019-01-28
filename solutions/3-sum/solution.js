@@ -48,7 +48,7 @@ const threeSum_withTwoSum = (nums) => {
 const threeSum = (nums) => {
 
   // clone the nums and sort
-  const clonedNums = nums.slice().sort((a, b) => a - b);
+  const clonedNums = [...nums].sort((a, b) => a - b);
 
   // Looping through the nums
   const targetSum = 0;
@@ -58,6 +58,7 @@ const threeSum = (nums) => {
 
     // Skip duplicate case
     if (i > 0 && clonedNums[i] === clonedNums[i - 1]) continue;
+
     // Avoid doing unnecessary looping
     if (clonedNums[i] * 3 > targetSum) break;
 

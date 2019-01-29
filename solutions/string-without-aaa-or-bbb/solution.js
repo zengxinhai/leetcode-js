@@ -3,32 +3,37 @@
  * @param {number} B
  * @return {string}
  */
-const strWithout3a3b = (A, B) => {
-
-  let largeAlpha = 'a', large = A, smallAlpha = 'b', small = B;
-  if (B > A) {
-    [largeAlpha, smallAlpha] = [smallAlpha, largeAlpha];
-    [large, small] = [small, large];
-  }
+const strWithout3a3b = (A, B, a = 'a', b = 'b') => {
+  if (B > A) return strWithout3a3b(B, A, b, a);
 
   const total = A + B;
   let ans = '';
   let i = 0;
   while (i < total) {
-    if (small === 0) {
-      for (let j = 0; j < large; j++) { ans += largeAlpha };
+    if (B === 0) {
+      while (A-- > 0) { ans += a; }
       break;
     }
-    if (large === small) {
-      for (let j = 0; j < large; j++) { ans += `${largeAlpha}${smallAlpha}`; }
+    if (A === B) {
+      while (A-- > 0) { ans += (a + b); }
       break;
     }
-    if (large > small) {
-      ans += `${largeAlpha}${largeAlpha}${smallAlpha}`;
-      large -= 2;
-      small--;
-      i += 3;
+    if (A > B) {
+      ans += (a + a + b);
+      A -= 2, B--, i += 3;
     }
+  }
+  return ans;
+};
+
+/* A very short solution */
+const strWithout3a3b = (A, B, a = 'a', b = 'b') => {
+  if (B > A) return strWithout3a3b(B, A, b, a);
+  let ans = '';
+  while (A-- > 0) {
+    ans += a;
+    if (A > B) ans += a, A--;
+    if (B-- > 0) ans += b;
   }
   return ans;
 };

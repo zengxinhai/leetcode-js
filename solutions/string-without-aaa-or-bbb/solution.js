@@ -5,28 +5,13 @@
  */
 const strWithout3a3b = (A, B, a = 'a', b = 'b') => {
   if (B > A) return strWithout3a3b(B, A, b, a);
-
-  const total = A + B;
-  let ans = '';
-  let i = 0;
-  while (i < total) {
-    if (B === 0) {
-      while (A-- > 0) { ans += a; }
-      break;
-    }
-    if (A === B) {
-      while (A-- > 0) { ans += (a + b); }
-      break;
-    }
-    if (A > B) {
-      ans += (a + a + b);
-      A -= 2, B--, i += 3;
-    }
+  if (A >= B * 2) {
+      return ''.padEnd(B * 3, `${a}${a}${b}`).padEnd(A + B, a);
   }
-  return ans;
+  return ''.padEnd((A - B) * 3, `${a}${a}${b}`).padEnd(A + B, `${a}${b}`);     
 };
 
-/* A very short solution */
+/* Another very short solution */
 const strWithout3a3b = (A, B, a = 'a', b = 'b') => {
   if (B > A) return strWithout3a3b(B, A, b, a);
   let ans = '';

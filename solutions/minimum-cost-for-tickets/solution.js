@@ -1,26 +1,19 @@
-const mincostTickets = (days, costs, lastDay = days[days.length - 1]) => {
-
-  const daysDic = days.reduce((reduced, day) => {
-    reduced[day] = true;
-    return reduced;
+const mincostTickets = (days, costs, validPeriods = [1,7,30]) => {
+    
+  const lastTravelDay = days[days.length - 1];
+  const travelDaysDic = days.reduce((pre, day) => {
+      pre[day] = true;
+      return pre;
   }, {});
-
   const costTillDay = { 0: 0 };
-
-  let i = 0;
-  while (i++ < lastDay) {
-    if (daysDic[i] === undefined) {
-      costTillDay[i] = costTillDay[i - 1];
-      continue;
-    }
-    const preOneDayCost = i >= 1 ? costTillDay[i - 1] : 0;
-    const preSevenDayAgoCost = i >= 7 ? costTillDay[i - 7] : 0;
-    const preThirtyDayCost = i >= 30 ? costTillDay[i - 30] : 0;
-    costTillDay[i] = Math.min(
-      preOneDayCost + costs[0],
-      preSevenDayAgoCost + costs[1],
-      preThirtyDayCost + costs[2],
-    );
-  }
-  return costTillDay[lastDay];
+  for (let i = 1; i <= lastTravelDay; i++) {
+      if (travelDaysDic[i] === undefined) {
+          costTillDay[i] = costTillDay[i - 1];
+          continue;
+      }
+      costTillDay[i] = Math.min(
+          ...validPeriods.map((period, idx) => costTillDay[Math.max(i - period, 0)] + costs[idx])
+      );
+  }    
+  return costTillDay[lastTravelDay];
 };
